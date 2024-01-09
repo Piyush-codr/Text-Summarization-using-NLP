@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Summerizer</title>
+    <link rel="stylesheet" type="text/css" href="./static/css/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
+      integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="./static/image/logo.png">
+  </head>
+  <body>
+    <style> 
+      input[type=button], input[type=submit], input[type=reset] {
+      background-image: linear-gradient(135deg, #f34079 40%, #fc894d);
+      border: 0;
+      color: white;
+      font-family: "Codec cold",sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 20px 20px;
+      text-decoration: none;
+      margin: 4px 2px;
+      cursor: pointer;
+      }
+    </style>
+    <!-- Text Summarization  -->
+    <section>
+      <div class="container">
+        <header>
+          <a href="." class="logo">
+          <img src="./static/image/logo1.png" alt="LOGO">
+          </a>
+          <ul>
+            <li><a href="." class="active"> Home</a></li>
+            <li><a href="#team"> Team</a></li>
+            <li><a href="#feedback"> Feedback</a></li>
+          </ul>
+        </header>
+        <!-- Before User Input -->
+        <div class="content" >
+          <h2>Original Text</h2>
+          <br>
+          <form action="{{ url_for("summary")}}" method="post">
+            <textarea name="text" id="text" cols="75" rows="9" placeholder="&#x0a;  Enter some english text to get the summary in desired Language !" name="text">{{text}}</textarea>
+            <br><br>
+            <div class="l">
+              <label for="language">Choose a language for summary:</label>
+              <select id="language" name="lang">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="or">Odia</option>
+                <option value="bn">Bengali</option>
+                <option value="ta">Tamil</option>
+                <option value="te">Telugu</option>
+                <option value="gu">Gujarati</option>
+                <option value="kn">Kannada</option>
+                <option value="ko">Korean</option>
+                <option value="ru">Russian</option>
+                <option value="fr">French</option>
+                <option value="es">Spanish</option>
+                <option value="sv">Swedish</option>
+                <option value="de">German</option>
+                <option value="pt">Portuguese</option>
+                <option value="nl">Dutch</option>
+              </select>
+            </div>
+            <br>
+            <div class="form-submit-btn">
+              <input type="submit"  value="SUMMARIZE">
+            </div>
+          </form>
+        </div>
+        <!-- Post User Input -->
+        <div class="content1" >
+          <h2>Summary</h2>
+          <br>
+          <textarea id="copytextarea" cols="75" rows="9">{{summarized_text}}</textarea>
+          <br><br>
+          <button id="copyTextBtn">Copy Text</button>
+          <br>
+          <script>
+            copyTextBtn = document.querySelector('#copyTextBtn');
+            copyTextBtn.addEventListener('click', function(event) {
+              let copyTextarea = document.querySelector('#copytextarea');
+              copyTextarea.focus();
+              copyTextarea.select();
+              try {
+                let successful = document.execCommand('copy');
+                let msg = successful ? 'successful' : 'unsuccessful';
+                alert('Copied to Clipboard ' + msg);
+              } catch(err) {
+                alert('Unable to copy');
+              }
+            });
+          </script>
+          {% if summarized_text != NULL %}
+          <div id="TestsDiv" >
+            <h3>Listen the summary</h3>
+            <br>
+            <audio id="aud" controls autoplay muted>
+              <source src={{filename}} type="audio/wav">
+            </audio>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+    <!-- Team details -->
+    <section1 class="team" id="team">
+      <div class="container1">
+        <div class="card">
+          <div class="content1">
+            <div class="imgBx"><img src="/static/image/priya.jpg"> </div>
+            <div class="contentBx">
+              <h3>Priya Khetan<br><span>Creative designer</span></h3>
+            </div>
+          </div>
+          <ul1 class="sci">
+            <li style="--i:1"><a href="#"> <i class="fa fa-github" aria-hidden="true"></i></a></li>
+            <li style="--i:2"><a href="https://www.instagram.com/_priya.1520/"> <i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+            <li style="--i:3"><a href="https://www.linkedin.com/in/priya-khetan-/"> <i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+          </ul1>
+        </div>
+        <div class="card">
+          <div class="content1">
+            <div class="imgBx"><img src="/static/image/anu.png"> </div>
+            <div class="contentBx">
+              <h3>Anurag Thakur<br><span>Creative designer</span></h3>
+            </div>
+          </div>
+          <ul1 class="sci">
+            <li style="--i:1"><a href="https://github.com/Anurag-hub-zenith"> <i class="fa fa-github" aria-hidden="true"></i></a></li>
+            <li style="--i:2"><a href="https://www.instagram.com/ig__anurag16/"> <i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+            <li style="--i:3"><a href="https://www.linkedin.com/in/anurag-thakur-476148212/"> <i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+          </ul1>
+        </div>
+        <div class="card">
+          <div class="content1">
+            <div class="imgBx"><img src="/static/image/piyush 2.jpg"> </div>
+            <div class="contentBx">
+              <h3>Piyush Kumar<br><span>Frontend Developer</span></h3>
+            </div>
+          </div>
+          <ul1 class="sci">
+            <li style="--i:1"><a href="https://github.com/Piyush-codr"> <i class="fa fa-github" aria-hidden="true"></i></a></li>
+            <li style="--i:2"><a href="https://www.instagram.com/ig__piyush20/"> <i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+            <li style="--i:3"><a href="https://www.linkedin.com/in/piyush-kumar-7ab1951b8/"> <i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+          </ul1>
+        </div>
+      </div>
+    </section1>
+    <!-- Feedback part -->
+    <section3 class="feedback" id="feedback">
+      <div class="container3">
+        <div class="post">
+          <div class="text">Thanks for rating us!</div>
+        </div>
+        <div class="star-widget">
+          <input type="radio" name="rate" id="rate-5">
+          <label for="rate-5" class="fa fa-star"></label>
+          <input type="radio" name="rate" id="rate-4">
+          <label for="rate-4" class="fa fa-star"></label>
+          <input type="radio" name="rate" id="rate-3">
+          <label for="rate-3" class="fa fa-star"></label>
+          <input type="radio" name="rate" id="rate-2">
+          <label for="rate-2" class="fa fa-star"></label>
+          <input type="radio" name="rate" id="rate-1">
+          <label for="rate-1" class="fa fa-star"></label>
+          <form method="get">
+            <header><p>Please provide your feedback &#128516;</p></header>
+            <div class="textarea">
+              <textarea name="feedback" cols="30" placeholder="Describe your experiance..."></textarea>
+            </div>
+            <div class="btn">
+              <button type="submit">Post</button>
+            </div>
+           
+          </form>
+        </div>
+      </div>
+      <!-- <script>
+        const btn = document.querySelector("button");
+        const post = document.querySelector(".post");
+        const widget = document.querySelector(".star-widget");
+        
+        btn.onclick = ()=>{
+            widget.style.display = "none";
+            post.style.display = "block";
+            return false;
+        
+        }
+      </script> -->
+    </section3>
+  </body>
+</html>
